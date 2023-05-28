@@ -12,7 +12,7 @@ export INTERNAL_IP
 cd /home/container || exit 1
 
 # Update repo from git
-if [ "${USER_UPLOAD}" == "false" ] || [ "${USER_UPLOAD}" == "0" ]; then
+if [ "${GIT_ENABLED}" == "false" ] || [ "${GIT_ENABLED}" == "0" ]; then
     echo -e "Git enabled."
     
     ## add git ending if it's not on the address
@@ -20,10 +20,10 @@ if [ "${USER_UPLOAD}" == "false" ] || [ "${USER_UPLOAD}" == "0" ]; then
         GIT_ADDRESS=${GIT_ADDRESS}.git
     fi
 
-    if [ -z "${USERNAME}" ] && [ -z "${ACCESS_TOKEN}" ]; then
+    if [ -z "${GIT_USERNAME}" ] && [ -z "${GIT_ACCESS_TOKEN}" ]; then
         echo -e "Git Username or Git Token was not specified. Proceeding anonymously."
     else
-        GIT_ADDRESS="https://${USERNAME}:${ACCESS_TOKEN}@$(echo -e ${GIT_ADDRESS} | cut -d/ -f3-)"
+        GIT_ADDRESS="https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@$(echo -e ${GIT_ADDRESS} | cut -d/ -f3-)"
     fi
 
     
@@ -51,12 +51,12 @@ if [ "${USER_UPLOAD}" == "false" ] || [ "${USER_UPLOAD}" == "0" ]; then
     else
         # No files exist in resources folder, clone
         echo -e "/home/container is empty.\ncloning files into repo"
-        if [ -z ${BRANCH} ]; then
+        if [ -z ${GIT_BRANCH} ]; then
             echo -e "Cloning default branch into /home/container."
             git clone ${GIT_ADDRESS} .
         else
-            echo -e "Cloning ${BRANCH} branch into /home/container."
-            git clone --single-branch --branch ${BRANCH} ${GIT_ADDRESS} . && echo "Finished cloning into /home/container from Git." || echo "Failed cloning into /home/container from Git."
+            echo -e "Cloning ${GIT_BRANCH} branch into /home/container."
+            git clone --single-branch --branch ${GIT_BRANCH} ${GIT_ADDRESS} . && echo "Finished cloning into /home/container from Git." || echo "Failed cloning into /home/container from Git."
         fi
     fi
 else
