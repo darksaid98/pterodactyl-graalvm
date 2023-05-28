@@ -9,9 +9,9 @@ ARG TARGETPLATFORM
 ARG GRAAL_VERSION=22.3.2
 ARG JAVA_VERSION=17
 
-LABEL author="RikoDEV" maintainer="kontakt@riko.dev"
+LABEL author="darksaid98" maintainer="kontakt@riko.dev"
 
-LABEL org.opencontainers.image.source="https://github.com/RikoDEV/pterodactyl-graalvm"
+LABEL org.opencontainers.image.source="https://github.com/darksaid98/pterodactyl-graalvm"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
