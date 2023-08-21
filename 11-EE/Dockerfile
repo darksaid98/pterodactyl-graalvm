@@ -15,8 +15,13 @@ LABEL org.opencontainers.image.source="https://github.com/darksaid98/pterodactyl
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Default to UTF-8 file.encoding
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
 RUN apt-get update -y \
-  && apt-get install -y lsof curl ca-certificates openssl git git-lfs tar sqlite3 fontconfig libfreetype6 tzdata iproute2 libstdc++6 \
+  && apt-get install -y curl ca-certificates openssl git git-lfs tar sqlite3 fontconfig tzdata locales iproute2 \
+  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+  && locale-gen en_US.UTF-8 \
   && case ${TARGETPLATFORM} in \
          "linux/amd64")  ARCH=linux-amd64  ;; \
          "linux/arm64")  ARCH=linux-aarch64  ;; \
@@ -40,6 +45,6 @@ ENV         USER=container HOME=/home/container
 
 WORKDIR     /home/container
 
-COPY        ./entrypoint.sh /entrypoint.sh
+COPY        ./../entrypoint.sh /entrypoint.sh
 
 CMD         ["/bin/bash", "/entrypoint.sh"]
