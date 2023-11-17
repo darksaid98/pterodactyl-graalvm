@@ -6,7 +6,7 @@
 FROM ubuntu:22.04
 
 ARG TARGETPLATFORM
-ARG GRAAL_VERSION=22.3.2
+ARG GRAAL_VERSION=22.3.3
 ARG JAVA_VERSION=17
 
 LABEL author="darksaid98" maintainer="kontakt@riko.dev"
